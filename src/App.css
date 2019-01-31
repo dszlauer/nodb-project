@@ -1,5 +1,12 @@
 .App {
   text-align: center;
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: stretch;
 }
 
 .App-logo {
@@ -11,7 +18,7 @@
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
@@ -20,6 +27,74 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.form {
+  margin: 0 10px;
+}
+
+.main {
+  background: whitesmoke;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: stretch;
+  transition: width 2s ease-in;
+}
+
+.car-card {
+  background: lightgray;
+  padding: 5px;
+  border-radius: 3px;
+  margin: 2px 2px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: stretch;
+}
+.myfav {
+  margin-left: 3px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  align-items: flex-start;
+  align-content: stretch;
+}
+
+img {
+  width: 300px;
+  border-radius: 3px;
+}
+
+span {
+  margin: 5px;
+  font-size: 10px;
+  background: white;
+  border-radius: 3px;
+  padding: 3px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  align-items: flex-end;
+  align-content: stretch;
+}
+
+.add-btn,
+.buy-btn {
+  border: none;
+  border-radius: 3px;
+  width: 125px;
+  height: 25px;
+  margin: 5px;
 }
 
 @keyframes App-logo-spin {
