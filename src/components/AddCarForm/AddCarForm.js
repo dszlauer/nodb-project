@@ -19,6 +19,7 @@ class AddCarForm extends Component {
   add() {
     const { id, imageUrl, make, year, price } = this.state;
 
+    console.log("Form Axios", newCar);
     let newCar = {
       id,
       imageUrl: imageUrl
@@ -42,6 +43,7 @@ class AddCarForm extends Component {
   }
 
   render() {
+    console.log("FORM", this.state);
     const { imageUrl, make, year, price } = this.state;
     return (
       <div className="add-car">

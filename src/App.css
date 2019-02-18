@@ -74,7 +74,8 @@ img {
   border-radius: 3px;
 }
 
-span {
+span,
+input {
   margin: 5px;
   font-size: 10px;
   background: white;

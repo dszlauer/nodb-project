@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
-import AddCarForm from "./components/AddCarForm";
+import Header from "./components/Header/Header";
+import AddCarForm from "./components/AddCarForm/AddCarForm";
 import "./App.css";
 
 class App extends Component {
@@ -9,10 +10,13 @@ class App extends Component {
 
     this.state = {
       cars: [],
-      myCarList: []
+      myCarList: [],
+      make: "",
+      year: 0,
+      price: 0
     };
     this.addCar = this.addCar.bind(this);
-    this.getCars = this.getCars.bind(this);
+    // this.getCars = this.getCars.bind(this);
   }
   componentDidMount() {
     this.getCars();
@@ -28,6 +32,10 @@ class App extends Component {
     this.getCars();
   }
 
+  myList() {
+    this.getCars();
+  }
+
   addToMyList(cars) {
     const { id, imageUrl, make, year, price } = cars;
     let newList = {
@@ -39,8 +47,14 @@ class App extends Component {
     };
 
     axios.post("/api/favcars", newList).then(response => {
-      console.log(response.data);
+      // console.log(response.data);
       this.setState({ myCarList: response.data });
+    });
+  }
+
+  editCar(id, make, year, price) {
+    axios.put("/api/cars/", { id, make, year, price }).then(response => {
+      this.setState({ cars: response.data });
     });
   }
 
@@ -50,8 +64,27 @@ class App extends Component {
     });
   }
 
+  handleInputMake = e => {
+    this.setState({
+      make: e
+    });
+  };
+  handleInputYear = e => {
+    this.setState({
+      year: e
+    });
+  };
+  handleInputPrice = e => {
+    this.setState({
+      price: e
+    });
+  };
+
   render() {
+    console.log("APP", this.state);
+
     const { cars, myCarList } = this.state;
+
     let mappedCars = cars.map(car => {
       return (
         <div key={car.id} className="car-card">
@@ -62,6 +95,31 @@ class App extends Component {
             <span>Price: {car.price}</span>
             <button className="add-btn" onClick={() => this.addToMyList(car)}>
               Add to my list
+            </button>
+            <br />
+            <br />
+            <input
+              onChange={e => this.handleInputMake(e.target.value)}
+              placeholder="Update Make"
+            />
+            <input
+              onChange={e => this.handleInputYear(e.target.value)}
+              placeholder="Update Year"
+            />
+            <input
+              onChange={e => this.handleInputPrice(e.target.value)}
+              placeholder="Update Price"
+            />
+            <button
+              onClick={() =>
+                this.editCar(
+                  car.id,
+                  this.state.make,
+                  this.state.year,
+                  this.state.price
+                )
+              }>
+              Update
             </button>
           </div>
         </div>
@@ -86,6 +144,9 @@ class App extends Component {
 
     return (
       <div className="App">
+        <div>
+          <Header />
+        </div>
         <div className="form">
           <AddCarForm addCar={this.addCar} />
         </div>

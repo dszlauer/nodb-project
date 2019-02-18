@@ -8,6 +8,7 @@ app.use(bodyParser.json());
 app.get("/api/cars", carsController.getCars);
 app.post("/api/cars", carsController.addCar);
 app.post("/api/favcars", carsController.addToMyList);
+app.put("/api/cars/", carsController.editCar);
 app.delete("/api/cars/:id", carsController.deleteCar);
 
 const PORT = 4000;
