@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import axios from "axios";
 import Header from "./components/Header/Header";
 import AddCarForm from "./components/AddCarForm/AddCarForm";
+import CarDisplay from "./components/CarDisplay/CarDisplay";
 import "./App.css";
+import FavCarList from "./components/FavCarList/FavCarList";
 
 class App extends Component {
   constructor(props) {
@@ -16,7 +18,10 @@ class App extends Component {
       price: 0
     };
     this.addCar = this.addCar.bind(this);
-    // this.getCars = this.getCars.bind(this);
+    this.getCars = this.getCars.bind(this);
+    this.addToMyList = this.addToMyList.bind(this);
+    this.editCar = this.editCar.bind(this);
+    this.deleteCar = this.deleteCar.bind(this);
   }
   componentDidMount() {
     this.getCars();
@@ -52,7 +57,8 @@ class App extends Component {
     });
   }
 
-  editCar(id, make, year, price) {
+  editCar(id) {
+    const { make, year, price } = this.state;
     axios.put("/api/cars/", { id, make, year, price }).then(response => {
       this.setState({ cars: response.data });
     });
@@ -84,62 +90,28 @@ class App extends Component {
     console.log("APP", this.state);
 
     const { cars, myCarList } = this.state;
+    /* 
+add to my list from app
+handleinputmake
+handleinputyear
+handleprice
 
+*/
     let mappedCars = cars.map(car => {
       return (
-        <div key={car.id} className="car-card">
-          <img src={car.imageUrl} alt="" />
-          <div className="car-info">
-            <span>Make: {car.make}</span>
-            <span>Year: {car.year}</span>
-            <span>Price: {car.price}</span>
-            <button className="add-btn" onClick={() => this.addToMyList(car)}>
-              Add to my list
-            </button>
-            <br />
-            <br />
-            <input
-              onChange={e => this.handleInputMake(e.target.value)}
-              placeholder="Update Make"
-            />
-            <input
-              onChange={e => this.handleInputYear(e.target.value)}
-              placeholder="Update Year"
-            />
-            <input
-              onChange={e => this.handleInputPrice(e.target.value)}
-              placeholder="Update Price"
-            />
-            <button
-              onClick={() =>
-                this.editCar(
-                  car.id,
-                  this.state.make,
-                  this.state.year,
-                  this.state.price
-                )
-              }>
-              Update
-            </button>
-          </div>
-        </div>
+        <CarDisplay
+          car={car}
+          addToMyList={this.addToMyList}
+          handleInputMake={this.handleInputMake}
+          handleInputYear={this.handleInputYear}
+          handleInputPrice={this.handleInputPrice}
+          editCar={this.editCar}
+        />
       );
     });
 
     const myMappedList = myCarList.map(car => {
-      return (
-        <div key={car.id} className="car-card">
-          <img src={car.imageUrl} alt="" />
-          <div className="fav-car-info">
-            <span>Make: {car.make}</span>
-            <span>Year: {car.year}</span>
-            <span>Price: {car.price}</span>
-            <button className="buy-btn" onClick={() => this.deleteCar(car.id)}>
-              Buy
-            </button>
-          </div>
-        </div>
-      );
+      return <FavCarList car={car} deleteCar={this.deleteCar} />;
     });
 
     return (

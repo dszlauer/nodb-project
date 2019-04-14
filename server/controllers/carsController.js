@@ -36,6 +36,7 @@ module.exports = {
   editCar: (req, res) => {
     let { id, make, year, price } = req.body;
 
+    // +id is set because sometimes data comes in as a string instead of an index, +id will set it as a integer
     let index = cars.findIndex(car => {
       return +id === car.id;
     });
